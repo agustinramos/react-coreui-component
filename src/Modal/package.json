@@ -1,0 +1,6 @@
+{
+  "name": "Modal",
+  "version": "2.1",
+  "private": true,
+  "main": "./index.js"
+}

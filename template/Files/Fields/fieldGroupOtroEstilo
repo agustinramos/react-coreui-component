@@ -1,0 +1,19 @@
+        <Field
+          className='mb-0'
+          required
+          validate={value => {
+            return FieldValidate.required(value) ||
+              FieldValidate.menorQueInclusive(value, 16) ||
+              FieldValidate.mayorQueInclusive(value, 0)
+          }}
+          name='NAME'
+          type='number'
+          label='LABEL'
+          min='1'
+          max='16'
+          stylesInput={StylesInput}
+          component={FieldGroup}
+          normalize={value => FieldNormalize.toInt(value)}
+          // onSelect={() => {}}
+        />
+ADD_FIELD

@@ -1,0 +1,18 @@
+        <Field
+          required
+          validate={value => FieldValidate.required(value)}
+          name='NAME'
+          type='text'
+          label='LABEL'
+          formato='DD/MM/YYYY'
+          fromMonth={moment().add(1, 'days').toDate()}
+          // toMonth={moment('31/12/' + this.state.calendario , 'DD/MM/YYYY', true).toDate()}
+          disabledDays={[{
+            before: moment().add(1, 'days').toDate()
+            // after: moment('31/12/' + this.state.calendario, 'DD/MM/YYYY', true).toDate()
+          }]}
+          initialMonth={moment().add(1, 'days').toDate()}
+          component={FieldDateTime}
+          // onSelected={() => this.props.change('bolsas[' + index + '].hasta', '')}
+        />
+ADD_FIELD

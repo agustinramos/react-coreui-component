@@ -1,0 +1,11 @@
+        <Field
+          validate={value => FieldValidate.maxLength(value, 300)}
+          name='NAME'
+          label='LABEL'
+          componentClass='textarea'
+          rows='5'
+          component={FieldGroup}
+          normalize={value => FieldNormalize.cleanWhiteSpace(value)}
+          // onSelect={() => {}}
+        />
+ADD_FIELD

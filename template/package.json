@@ -1,0 +1,6 @@
+{
+  "name": "generate-template",
+  "version": "4.0",
+  "private": true,
+  "main": "./start.sh"
+}

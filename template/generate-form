@@ -1,0 +1,227 @@
+# chequear warnings que quedan
+
+#!/bin/bash
+ROOT=$(readlink -f $(dirname "$0"))
+
+echo '------------------------------'
+echo 'FORM FIELDS:'
+
+# Entradas
+read -e -p "  generate form (y/n): " -i "y" form
+
+#FILES
+FOLDER=src/containers/$1
+rm -Rf $FOLDER/tmp
+mkdir $FOLDER/tmp
+FOLDER_TMP=$FOLDER/tmp
+FILE_FORM=$FOLDER/components/FormModalAE/index.js
+FILE_VIEW=$FOLDER/view.js
+FILE_INDEX=$FOLDER/index.js
+FIELDS=$ROOT/Files/Fields
+STYLES=$ROOT/Files/Styles
+DEPENDENCY_FIELD_TEXT='n'
+DEPENDENCY_FIELD_TEXT_ICON='n'
+DEPENDENCY_FIELD_SWITCH='n'
+DEPENDENCY_FIELD_BUSQUEDA='n'
+DEPENDENCY_FIELD_DATE='n'
+DEPENDENCY_FIELD_DATETIME='n'
+DEPENDENCY_FIELD_TIME='n'
+DEPENDENCY_OTRO_ESTILO='n'
+
+if [ "$form" != "y" ]; then
+  # rm -Rf $FOLDER/components/FormModalAE
+  exit
+fi
+
+options () {
+  PS3='Please enter your field: '
+  options=(
+    "FieldGroupText"
+    "FieldGroupTextRequired"
+    "FieldGroupNumber"
+    "FieldGroupWithIcon"
+    "FieldGroupPorcentaje"
+    "FieldGroupOtroEstilo"
+    "FieldBusqueda"
+    "FieldSelect"
+    "FieldDate"
+    "FieldDateTime"
+    "FieldTime"
+    "FieldSwitch"
+    "FieldTextarea"
+    "Quit"
+  )
+  select opt in "${options[@]}"
+  do
+    case $opt in
+        "FieldGroupText") echo "fieldGroupText"; break;;
+        "FieldGroupTextRequired") echo "fieldGroupTextRequired"; break;;
+        "FieldGroupNumber") echo "fieldGroupNumber"; break;;
+        "FieldGroupWithIcon") echo "fieldGroupWithIcon"; break;;
+        "FieldGroupPorcentaje") echo "fieldGroupPorcentaje"; break;;
+        "FieldGroupOtroEstilo") echo "fieldGroupOtroEstilo"; break;;
+        "FieldBusqueda") echo "fieldBusqueda"; break;;
+        "FieldSelect") echo "fieldSelect"; break;;
+        "FieldDate") echo "fieldDate"; break;;
+        "FieldDateTime") echo "fieldDateTime"; break;;
+        "FieldTime") echo "fieldTime"; break;;
+        "FieldSwitch") echo "fieldSwitch"; break;;
+        "FieldTextarea") echo "fieldTextarea"; break;;
+        "Quit") echo "exit"; break;;
+        *) echo "invalid option"; break;;
+    esac
+  done
+}
+
+ADD_FIELD='y'
+while [ "$ADD_FIELD" = "y" ]; do
+  SELECT_FIELD=$(options)
+
+  if [ "$SELECT_FIELD" = "invalid option" ]; then
+    continue
+  fi
+
+  if [ "$SELECT_FIELD" != "exit" ]; then
+    echo '//////////////////////////////'
+    cp $FIELDS/$SELECT_FIELD $FOLDER_TMP
+
+    read -p "  - set name: " NAME
+    read -p "  - set label: " LABEL
+    sed -i "s/NAME/$NAME/g" $FOLDER_TMP/$SELECT_FIELD  #set name
+    sed -i "s/LABEL/$LABEL/g" $FOLDER_TMP/$SELECT_FIELD  #set label
+    if [ "$SELECT_FIELD" = "fieldSelect" ] || [ "$SELECT_FIELD" = "fieldBusqueda" ]; then
+      read -p "  - set iterator: " ITERATOR
+      read -p "  - set recurso iterator: " RESOURCE
+      sed -i "s/ITERATOR/$ITERATOR/g" $FOLDER_TMP/$SELECT_FIELD  #set iterator
+    fi
+    if [ "$SELECT_FIELD" = "fieldBusqueda" ]; then
+      read -p "  - set initial values prop: " INITIALVALUES_PROP
+      read -e -p "  - set item key: " -i "id" ITEM_KEY
+      read -e -p "  - set item value: " -i "nombre" ITEM_VALUE
+      read -e -p "  - set prop find by: " -i "nombre" FIND_BY_PROP
+      read -e -p "  - set prop order by: " -i "nombre" ORDER_BY_PROP
+      sed -i "s/INITIALVALUES_PROP/$INITIALVALUES_PROP/g" $FOLDER_TMP/$SELECT_FIELD  #set iterator
+      sed -i "s/ITEM_KEY/$ITEM_KEY/g" $FOLDER_TMP/$SELECT_FIELD  #set item key
+      sed -i "s/ITEM_VALUE/$ITEM_VALUE/g" $FOLDER_TMP/$SELECT_FIELD  #set item value
+      sed -i "s/FIND_BY_PROP/$FIND_BY_PROP/g" $FOLDER_TMP/$SELECT_FIELD  #set find prop
+      sed -i "s/ORDER_BY_PROP/$ORDER_BY_PROP/g" $FOLDER_TMP/$SELECT_FIELD  #set find prop
+      sed -i "s/RESOURCE/$RESOURCE/g" $FOLDER_TMP/$SELECT_FIELD  #set iterator
+    fi
+
+    sed -i "/ADD_FIELD/ {
+              r $FOLDER_TMP/$SELECT_FIELD
+              a
+              d
+        }" "$FILE_FORM"
+
+    if [ "$SELECT_FIELD" = "fieldSelect" ]; then
+      DEPENDENCY_FIELD_TEXT='y'
+      sed -i "/ADD_DEFAULT_PROP/i\  $ITERATOR: []," $FILE_FORM  #add default prop
+      sed -i "/ADD_PROPTYPES/i\  $NAME: PropTypes.number," $FILE_FORM  #add proptypes
+      sed -i "/ADD_PROPTYPES/i\  $ITERATOR: PropTypes.array," $FILE_FORM  #add proptypes
+      sed -i "/ADD_INYECT_PROP/i\    $NAME: selector(state, '$NAME')," $FILE_FORM  #add inyect prop
+      sed -i "/ADD_IF_RESOURCE/i\    props.$ITERATOR.total === undefined && ADD_LISTAR_RESOURCE" $FILE_VIEW  #add if resource
+
+      read -e -p "  if resource required (y/n): " -i "n" RESOURCE_REQUIRED
+      if [ "$RESOURCE_REQUIRED" = "y" ]; then
+        sed -i "/ADD_PROPS/i\    $ITERATOR: getResourceStatic('$RESOURCE')(state)," $FILE_INDEX  #add inyect prop
+        sed -i "s/ADD_LISTAR_RESOURCE/props.listResourceStatic('$RESOURCE')/g" $FILE_VIEW  #add listar resource
+      else
+        sed -i "/ADD_PROPS/i\    $ITERATOR: getResourceDynamic('$RESOURCE')(state)," $FILE_INDEX  #add inyect prop
+        sed -i "/ADD_RESET_RESOURCE/i\    this.props.resetResourceDynamic('$RESOURCE')" $FILE_VIEW  #add reset resource
+        read -p "  resource find orderBy prop: " RESOURCE_FIND_ORDER_BY
+        sed -i "s/ADD_LISTAR_RESOURCE/props.listResourceDynamic(\n      '$RESOURCE',\n      null,\n      null,\n      [{p: '$RESOURCE_FIND_ORDER_BY', v: 'asc'}]\n    )/g" $FILE_VIEW  #add listar resource
+      fi
+      sed -i "/ADD_PROPTYPES/i\  $ITERATOR: PropTypes.object," $FILE_VIEW  #add inyect proptypes
+      sed -i "/PASS_PROPS/i\                $ITERATOR={this.props.$ITERATOR.data}" $FILE_VIEW  #add inyect proptypes
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldBusqueda" ]; then
+      DEPENDENCY_FIELD_BUSQUEDA='y'
+      sed -i "/ADD_PROPTYPES/i\  $ITERATOR: PropTypes.object," $FILE_FORM  #add proptypes
+      sed -i "/ADD_INYECT_PROP/i\    $ITERATOR: getResourceDynamic('$RESOURCE')(state)," $FILE_FORM  #add inyect prop
+      sed -i "/ADD_RESET_CUSTOM/i\    this.props.resetResourceDynamicCustom('$RESOURCE', 'registros', {})" $FILE_VIEW  #add reset resource custom
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldGroupText" ] || [ "$SELECT_FIELD" = "fieldGroupTextRequired" ] || [ "$SELECT_FIELD" = "fieldGroupNumber" ] || [ "$SELECT_FIELD" = "fieldGroupPorcentaje" ] || [ "$SELECT_FIELD" = "fieldTextarea" ]; then
+      DEPENDENCY_FIELD_TEXT='y'
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldGroupWithIcon" ]; then
+      DEPENDENCY_FIELD_TEXT_ICON='y'
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldSwitch" ]; then
+      DEPENDENCY_FIELD_SWITCH='y'
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldDate" ]; then
+      DEPENDENCY_FIELD_DATE='y'
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldDateTime" ]; then
+      DEPENDENCY_FIELD_DATETIME='y'
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldTime" ]; then
+      DEPENDENCY_FIELD_TIME='y'
+    fi
+
+    if [ "$SELECT_FIELD" = "fieldGroupOtroEstilo" ]; then
+      DEPENDENCY_OTRO_ESTILO='y'
+    fi
+
+    echo 'Added correctly' $SELECT_FIELD
+    echo '//////////////////////////////'
+    read -e -p "  add new field (y/n): " -i "y" ADD_FIELD
+  else
+    ADD_FIELD='n'
+  fi
+done
+
+if [ "$DEPENDENCY_FIELD_DATE" = "y" ] || [ "$DEPENDENCY_FIELD_DATETIME" = "y" ]; then
+  sed -i "/OTHER_DEPENDENCY/i\import moment from 'moment'" $FILE_FORM  #add other dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_TIME" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldTime,/g" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_DATETIME" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldDateTime,/g" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_DATE" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldDate,/g" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_SWITCH" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldSwitch,/g" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_BUSQUEDA" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldBusqueda,/g" $FILE_FORM  #add dependency
+  sed -i "/ADD_DEFAULT_PROP/i\  initialValues: {}," $FILE_FORM  #add default prop
+  sed -i "/ADD_INYECT_PROP/i\    fetchingFind: getResourceDynamicFetchingFind(state)," $FILE_FORM  #add inyect action
+  sed -i "/ADD_INYECT_ACTION/i\  listResourceDynamic," $FILE_FORM  #add inyect action
+  sed -i "/ADD_PROPTYPES/i\  initialValues: PropTypes.object," $FILE_FORM  #add proptypes
+  sed -i "/ADD_PROPTYPES/i\  fetchingFind: PropTypes.bool," $FILE_FORM  #add proptypes
+  sed -i "/ADD_PROPTYPES/i\  listResourceDynamic: PropTypes.func," $FILE_FORM  #add proptypes
+  sed -i "/ADD_DEPENDENCY/i\import { listResourceDynamic } from 'modules/rDynamic/actions'" $FILE_FORM  #add dependency
+  sed -i "/ADD_DEPENDENCY/i\import { getResourceDynamicFetchingFind, getResourceDynamic } from 'modules/rDynamic/selectors'" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_TEXT_ICON" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldGroupIcon,/g" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_FIELD_TEXT" = "y" ]; then
+  sed -i "s/{ Form,/{ Form, FieldGroup,/g" $FILE_FORM  #add dependency
+fi
+
+if [ "$DEPENDENCY_OTRO_ESTILO" = "y" ]; then
+  sed -i "/OTRO_ESTILO/ {
+            r $STYLES/styleFieldGroupOtroEstilo
+            a
+      }" "$FILE_FORM"
+fi

@@ -1,0 +1,119 @@
+#!/bin/bash
+ROOT=$(readlink -f $(dirname "$0"))
+
+echo '------------------------------'
+echo 'MODALES:'
+
+# Entradas
+read -e -p "  modal ver detalle (y/n): " -i "y" modalVerDetalle
+read -e -p "  modal agregar (y/n): " -i "y" modalAgregar
+read -e -p "  modal editar (y/n): " -i "y" modalEditar
+read -e -p "  modal habilitar-deshabilitar (y/n): " -i "y" modalHabilitarDeshabilitar
+read -e -p "  modal eliminar (y/n): " -i "y" modalEliminar
+read -e -p "  modal borrar (y/n): " -i "y" modalBorrar
+
+#FILES
+FILE_VIEW=src/containers/$1/view.js
+FILE_INDEX=src/containers/$1/index.js
+
+#BUTTONS
+BUTTON_VER_DETALLE=$ROOT/Files/Buttons/verDetalle
+BUTTON_AGREGAR=$ROOT/Files/Buttons/agregar
+BUTTON_EDITAR=$ROOT/Files/Buttons/editar
+BUTTON_HABILITAR_DESHABILITAR=$ROOT/Files/Buttons/habilitar-deshabilitar
+BUTTON_ELIMINAR=$ROOT/Files/Buttons/eliminar
+BUTTON_BORRAR=$ROOT/Files/Buttons/borrar
+
+#MODALES
+MODAL_VER_DETALLE=$ROOT/Files/Modales/verDetalle
+MODAL_AGREGAR=$ROOT/Files/Modales/agregar
+MODAL_EDITAR=$ROOT/Files/Modales/editar
+MODAL_HABILITAR_DESHABILITAR=$ROOT/Files/Modales/habilitar-deshabilitar
+MODAL_ELIMINAR=$ROOT/Files/Modales/eliminar
+MODAL_BORRAR=$ROOT/Files/Modales/borrar
+
+#DEFAULTS
+T_BODY_STYLE=$ROOT/Files/Defaults/habilitar-deshabilitar/tBodyStyle
+T_BODY_FORMAT=$ROOT/Files/Defaults/habilitar-deshabilitar/tBodyFormat
+
+#BORRAR
+if [ "$modalBorrar" = "y" ]; then
+  sed -i "/ADD_STATE/a\      modalBorrar: false," "$FILE_VIEW"
+  sed -i "/ADD_BUTTONS/ {
+            r $BUTTON_BORRAR
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_MODALES/ {
+            r $MODAL_BORRAR
+            a
+      }" "$FILE_VIEW"
+fi
+#ELIMINAR
+if [ "$modalEliminar" = "y" ]; then
+  sed -i "/ADD_STATE/a\      modalEliminar: false," "$FILE_VIEW"
+  sed -i "/ADD_BUTTONS/ {
+            r $BUTTON_ELIMINAR
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_MODALES/ {
+            r $MODAL_ELIMINAR
+            a
+      }" "$FILE_VIEW"
+fi
+#HABILITAR-DESHABILITAR
+if [ "$modalHabilitarDeshabilitar" = "y" ]; then
+  sed -i "/ADD_STATE/a\      modalHabilitarDeshabilitar: false," "$FILE_VIEW"
+  sed -i "/ADD_BUTTONS/ {
+            r $BUTTON_HABILITAR_DESHABILITAR
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_MODALES/ {
+            r $MODAL_HABILITAR_DESHABILITAR
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_STYLE_TBODY/ {
+            r $T_BODY_STYLE
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_FORMAT_TBODY/ {
+            r $T_BODY_FORMAT
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_THEAD/a\                habilitado: 'Habilitado'" "$FILE_VIEW"  #add prop
+fi
+#EDITAR
+if [ "$modalEditar" = "y" ]; then
+  sed -i "/ADD_STATE/a\      modalEditar: false," "$FILE_VIEW"
+  sed -i "/ADD_BUTTONS/ {
+            r $BUTTON_EDITAR
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_MODALES/ {
+            r $MODAL_EDITAR
+            a
+      }" "$FILE_VIEW"
+fi
+#AGREGAR
+if [ "$modalAgregar" = "y" ]; then
+  sed -i "/ADD_STATE/a\      modalAgregar: false," "$FILE_VIEW"
+  sed -i "/title='text-listado'/ {
+            r $BUTTON_AGREGAR
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_MODALES/ {
+            r $MODAL_AGREGAR
+            a
+      }" "$FILE_VIEW"
+fi
+#VER_DETALLE
+if [ "$modalVerDetalle" = "y" ]; then
+  sed -i "/ADD_STATE/a\      modalVerDetalle: false," "$FILE_VIEW"
+  sed -i "/ADD_BUTTONS/ {
+            r $BUTTON_VER_DETALLE
+            a
+      }" "$FILE_VIEW"
+  sed -i "/ADD_MODALES/ {
+            r $MODAL_VER_DETALLE
+            a
+      }" "$FILE_VIEW"
+fi

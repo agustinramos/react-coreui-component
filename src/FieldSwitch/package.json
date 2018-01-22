@@ -1,0 +1,6 @@
+{
+  "name": "FieldSwitch",
+  "version": "1.4",
+  "private": true,
+  "main": "./index.js"
+}

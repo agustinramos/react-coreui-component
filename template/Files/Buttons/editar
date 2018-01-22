@@ -1,0 +1,1 @@
+                  { this.props._renderButtonModalM({permiso, recurso, registro, resetModalEditar: this.resetModalEditar}) }

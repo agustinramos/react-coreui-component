@@ -1,0 +1,19 @@
+        <Field
+          required
+          validate={value => {
+            return FieldValidate.required(value) ||
+              FieldValidate.maxLength(value, 10) ||
+              FieldValidate.mayorQue(value, 0)
+          }}
+          name='NAME'
+          type='number'
+          label='LABEL'
+          iconRight={() => {
+            return 'metros'
+          }}
+          min='1'
+          step='100'
+          normalize={value => FieldNormalize.toInt(value)}
+          component={FieldGroupIcon}
+        />
+ADD_FIELD

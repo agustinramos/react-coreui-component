@@ -1,0 +1,20 @@
+        <Field
+          required
+          horizontal={{labelSize: {sm: 7}, inputSize: {sm: 5}}}
+          validate={value => {
+            return FieldValidate.required(value) ||
+              FieldValidate.mayorQueInclusive(value, 0) ||
+              FieldValidate.menorQueInclusive(value, 100)
+          }}
+          name='NAME'
+          type='number'
+          label='LABEL'
+          iconRight={{awesome: 'percent'}}
+          min='0'
+          max='100'
+          step='10'
+          component={FieldGroupIcon}
+          normalize={value => FieldNormalize.toFloat(value)}
+          // onSelect={() => {}}
+        />
+ADD_FIELD
