@@ -1,0 +1,6 @@
+{
+  "name": "IconMotionMenu",
+  "version": "2.5",
+  "private": true,
+  "main": "./index.js"
+}

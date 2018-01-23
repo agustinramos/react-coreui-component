@@ -1,0 +1,5 @@
+            nextTitle={
+              <wrapper>
+                { this.props._renderButtonModalA({permiso, resetModalAgregar: this.resetModalAgregar})}
+              </wrapper>
+            }

@@ -1,0 +1,22 @@
+import View from './view'
+import { connect } from 'react-redux'
+
+import {
+  getResourceDynamic,
+  getResourceDynamicSelected
+} from 'modules/rDynamic/selectors'
+
+import { getResourceStatic } from 'modules/rStatic/selectors' // eslint-disable-line
+
+const mapDispatchToProps = {
+}
+
+const mapStateToProps = (state) => {
+  return {
+    recurso-plural: getResourceDynamic('recurso-singular')(state),
+    recurso-singularSeleccionado: getResourceDynamicSelected('recurso-singular')(state),
+ADD_PROPS
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(View)

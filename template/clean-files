@@ -1,0 +1,41 @@
+#!/bin/bash
+ROOT=$(readlink -f $(dirname "$0"))
+
+echo '------------------------------'
+echo 'CLEAN VARS'
+
+#FILES
+FOLDER=src/containers/$1
+FOLDER_TMP=$FOLDER/tmp
+FILE_CONTENT_DETALLE=$FOLDER/components/Detalle/index.js
+FILE_FORM=$FOLDER/components/FormModalAE/index.js
+FILE_VIEW=$FOLDER/view.js
+FILE_INDEX=$FOLDER/index.js
+
+sed -i "/ADD_CONTENT/d" $FILE_CONTENT_DETALLE
+
+sed -i "/ADD_FIELD/d" $FILE_FORM
+sed -i "/ADD_DEPENDENCY/d" $FILE_FORM
+sed -i "/OTHER_DEPENDENCY/d" $FILE_FORM
+sed -i "/OTRO_ESTILO/d" $FILE_FORM
+sed -i "/ADD_DEFAULT_PROP/d" $FILE_FORM
+sed -i "/ADD_PROPTYPES/d" $FILE_FORM
+sed -i "/ADD_INYECT_PROP/d" $FILE_FORM
+sed -i "/ADD_INYECT_ACTION/d" $FILE_FORM
+
+sed -i "/ADD_STATE/d" $FILE_VIEW
+sed -i "/ADD_THEAD/d" $FILE_VIEW
+sed -i "/ADD_BUTTONS/d" $FILE_VIEW
+sed -i "/ADD_MODALES/d" $FILE_VIEW
+sed -i "/ADD_PROPTYPES/d" $FILE_VIEW
+sed -i "/PASS_PROPS/d" $FILE_VIEW
+sed -i "/ADD_RESET_RESOURCE/d" $FILE_VIEW
+sed -i "/ADD_RESET_CUSTOM/d" $FILE_VIEW
+sed -i "/ADD_IF_RESOURCE/d" $FILE_VIEW
+sed -i "/ADD_LISTAR_RESOURCE/d" $FILE_VIEW
+sed -i "/ADD_STYLE_TBODY/d" $FILE_VIEW
+sed -i "/ADD_FORMAT_TBODY/d" $FILE_VIEW
+
+sed -i "/ADD_PROPS/d" $FILE_INDEX
+
+rm -Rf $FOLDER_TMP

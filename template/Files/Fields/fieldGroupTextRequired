@@ -1,0 +1,14 @@
+        <Field
+          required
+          validate={value => {
+            return FieldValidate.required(value) ||
+              FieldValidate.maxLength(value, 100)
+          }}
+          name='NAME'
+          type='text'
+          label='LABEL'
+          component={FieldGroup}
+          normalize={value => FieldNormalize.cleanWhiteSpace(value)}
+          // onSelect={() => {}}
+        />
+ADD_FIELD

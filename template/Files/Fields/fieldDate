@@ -1,0 +1,20 @@
+        <Field
+          required
+          validate={value => FieldValidate.required(value)}
+          name='NAME'
+          type='text'
+          label='LABEL'
+          formato='DD/MM/YYYY'
+          // disabled={!this.props.calendarioId}
+          // motiveDisabled='Seleccione primero otra cosa'
+          fromMonth={moment('01/01/2018', 'DD/MM/YYYY', true).toDate()}
+          toMonth={moment('31/12/2018', 'DD/MM/YYYY', true).toDate()}
+          // disabledDays={[{
+          //   before: moment('01/01/2018', 'DD/MM/YYYY', true).toDate(),
+          //   after: moment('31/12/2018', 'DD/MM/YYYY', true).toDate()
+          // }]}
+          initialMonth={moment('01/01/2018', 'DD/MM/YYYY', true).toDate()}
+          component={FieldDate}
+          // onSelected={() => {}}
+        />
+ADD_FIELD

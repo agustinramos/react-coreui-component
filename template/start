@@ -1,0 +1,55 @@
+#!/bin/bash
+ROOT=$(readlink -f $(dirname "$0"))
+
+echo '------------------------------'
+echo '------------------------------'
+echo 'Welcome to, GENERATE-TEMPLATE!!!'
+echo '------------------------------'
+echo 'CONFIG:'
+
+# Entradas
+read -p "  write path to generate template src/containers/: " path
+read -p "  write resource: " resource
+read -p "  write user permission: " permission
+permission="${permission//'/'/'\/'}"
+read -e -p "  write texto listado: " -i "Listado de " textoListado
+read -e -p "  write texto sin resultados: " -i "No existen " textoSinResultados
+
+mkdir -p src/containers/$path
+cp -R $ROOT/Files/View/* src/containers/$path
+cp -R $ROOT/Files/Components src/containers/$path
+rm -Rf src/containers/$path/components
+#CAMBIO LAS EXTENSIONES DE LOS ARCHIVOS
+mv src/containers/$path/index src/containers/$path/index.js
+mv src/containers/$path/view src/containers/$path/view.js
+mv src/containers/$path/Components/Detalle/index src/containers/$path/Components/Detalle/index.js
+mv src/containers/$path/Components/FormModalAE/index src/containers/$path/Components/FormModalAE/index.js
+mv src/containers/$path/Components src/containers/$path/components
+
+#GENERATE MODALES
+sh $ROOT/generate-modales $path
+
+#GENERATE THEAD TABLE
+sh $ROOT/generate-thead-table $path
+
+#GENERATE FORM
+sh $ROOT/generate-form $path
+
+#GENERATE CONTENT DETALLE
+sh $ROOT/generate-content-detalle $path
+
+#CLEAN FILES
+sh $ROOT/clean-files $path
+
+#FILES
+FILE_VIEW=src/containers/$path/view.js
+FILE_INDEX=src/containers/$path/index.js
+
+sed -i "s/recurso-singular/$resource/g" $FILE_VIEW  #recurso-singular
+sed -i "s/recurso-plural/$resource""s/g" $FILE_VIEW  #recurso-plural
+sed -i "s/permiso-usuario/$permission/g" $FILE_VIEW  #permiso-usuario
+sed -i "s/text-listado/$textoListado/g" $FILE_VIEW  #textoListado
+sed -i "s/texto-sin-resultados/$textoSinResultados/g" $FILE_VIEW  #textoSinResultados
+
+sed -i "s/recurso-singular/$resource/g" $FILE_INDEX  #recurso-singular
+sed -i "s/recurso-plural/$resource""s/g" $FILE_INDEX  #recurso-plural

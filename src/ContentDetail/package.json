@@ -1,0 +1,6 @@
+{
+  "name": "ContentDetail",
+  "version": "3.0",
+  "private": true,
+  "main": "./index.js"
+}
