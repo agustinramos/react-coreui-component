@@ -1,6 +1,6 @@
 {
   "name": "react-coreui-component",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Components CoreUI Full for Redux Form",
   "main": "dist/react-coreui-component.js",
   "jsnext:main": "dist/react-coreui-component.es.js",
