@@ -1,0 +1,9 @@
+        <Field
+          required
+          validate={value => FieldValidate.required(value)}
+          name='NAME'
+          label='LABEL'
+          component={FieldTime}
+          // onChanged={() => this.props.change('bolsas[' + index + '].hasta', '')}
+        />
+ADD_FIELD

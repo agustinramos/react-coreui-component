@@ -1,0 +1,6 @@
+{
+  "name": "FieldGroup",
+  "version": "2.3",
+  "private": true,
+  "main": "./index.js"
+}

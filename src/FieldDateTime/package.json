@@ -1,0 +1,6 @@
+{
+  "name": "FieldDateTime",
+  "version": "1.5",
+  "private": true,
+  "main": "./index.js"
+}

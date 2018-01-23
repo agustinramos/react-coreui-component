@@ -1,0 +1,11 @@
+        <Field
+          name='NAME'
+          type='checkbox'
+          label='LABEL'
+          // disabled
+          withText={{on: 'Si', off: 'No'}}
+          outlineAlt
+          component={FieldSwitch}
+          // onChanged={() => {}}
+        />
+ADD_FIELD

@@ -1,0 +1,267 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import {
+  withDefaultProps, withTooltipFunctions, withPaginationFunctions, withSaveRegistry, withModalFunctions,
+  withRenderModalA, withRenderModalVD, withRenderModalM, withRenderModalHD, withRenderModalE,
+  withInitializeResources
+} from 'hoc'
+import { Row, Badge } from 'reactstrap'
+import { } from 'react-bootstrap'
+import { ViewAnimated, Card, Table } from 'components/D-CoreUI'
+import FormModalAE from './components/FormModalAE'
+import Detalle from './components/Detalle'
+
+const permiso = 'permiso-usuario'
+const recurso = 'recurso-singular'
+// ##     ## #### ######## ##      ##
+// ##     ##  ##  ##       ##  ##  ##
+// ##     ##  ##  ##       ##  ##  ##
+// ##     ##  ##  ######   ##  ##  ##
+//  ##   ##   ##  ##       ##  ##  ##
+//   ## ##    ##  ##       ##  ##  ##
+//    ###    #### ########  ###  ###
+class View extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {}
+    this.resetModalAgregar = this.resetModalAgregar.bind(this)
+    this.resetModalEditar = this.resetModalEditar.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.resetResourceDynamic(recurso)
+ADD_RESET_RESOURCE
+  }
+
+  resetModalAgregar () {
+  }
+
+  resetModalEditar () {
+  }
+
+  render () {
+    return (
+      <ViewAnimated>
+        {/*
+          <Card
+            animated
+            open
+            size={{sm: 12}}
+            icon='fa fa-filter'
+            title='Filtros'
+          />
+        */}
+
+        {/*
+##       ####  ######  ########    ###    ########   #######
+##        ##  ##    ##    ##      ## ##   ##     ## ##     ##
+##        ##  ##          ##     ##   ##  ##     ## ##     ##
+##        ##   ######     ##    ##     ## ##     ## ##     ##
+##        ##        ##    ##    ######### ##     ## ##     ##
+##        ##  ##    ##    ##    ##     ## ##     ## ##     ##
+######## ####  ######     ##    ##     ## ########   #######
+        */}
+        <Row>
+          <Card
+            size={{sm: 12}}
+            icon={{awesome: 'align-justify'}}
+            title='text-listado'
+          >
+            <Table
+              // resize
+              txtSinResultados='texto-sin-resultados'
+              fixHeader
+              print
+              // columnsTag={{
+              //   fecha: true,
+              //   'pistaTipo.nombre': false,
+              //   limiteInscripcion: false,
+              //   limiteForfait: true
+              // }}
+              tHead={{
+ADD_THEAD
+              }}
+              tBodyObject={this.props.recurso-plural.data}
+              // tBodyDefault
+              tBodyStyle={{
+ADD_STYLE_TBODY
+              }}
+              tBodyFormat={{
+ADD_FORMAT_TBODY
+              }}
+              // tBodyStyleTR
+              pagination={{
+                configPagination: this.props.configPagination,
+                // perPage: 10, funciona si no esta limit
+                total: this.props.recurso-plural.total,
+                init: true,
+                detalle: true
+              }}
+              limit
+              // sort={{
+              //   init: 'fecha',
+              //   fieldsSort: {
+              //     fecha: 'asc',
+              //     'pistaTipo.nombre': 'asc'
+              //   }
+              // }}
+              // filter={{
+              //   options: {
+              //     nombre: 'text',
+              //     cuit: 'number',
+              //     fecha: 'date',
+              //     estado: [
+              //       {value: 'CALENDARIO', label: 'Calendario'},
+              //       {value: 'PROXIMAS_INSCRIPCIONES', label: 'Próximas inscripciones'},
+              //     ]
+              //   },
+              //   output: {
+              //     nombre: {exp: 'contains'}
+              //   }
+              // }}
+              // multiFilter={{
+              //   nombre: {
+              //     type: 'text',
+              //     criteria: [
+              //       {v: 'contains', l: 'Igual a'},
+              //       {v: 'lte', l: 'Menor a'}
+              //     ],
+              //     showAlways: true
+              //   },
+              //   cuit: {
+              //     type: 'number',
+              //     criteria: [
+              //       {v: 'contains', l: 'Que contenga'},
+              //       {v: 'gte', l: 'Mayor a'},
+              //       {v: 'in', l: 'Mayor a'}
+              //     ]
+              //   },
+              //   fecha: {
+              //     type: 'date',
+              //     criteria: [
+              //       {v: 'contains', l: 'Que contenga'},
+              //       {v: 'gte', l: 'Mayor a'},
+              //       {v: 'in', l: 'Mayor a'}
+              //     ],
+              //     label: 'Fecha'
+              //   },
+              //   numero: {
+              //     type: [{value: 1, label: 'uno'}, {value: 2, label: 'dos'}],
+              //     criteria: [
+              //       {v: 'contains', l: 'Que contenga'},
+              //       {v: 'gte', l: 'Mayor a'},
+              //       {v: 'in', l: 'Mayor a', d: 'test'}
+              //     ],
+              //     label: 'Numero'
+              //   }
+              // }}
+              returnSortPaginationAndFilter={(filterBy, orderBy, limit, offset) => {
+                this.props.setPagination(filterBy, orderBy, limit, offset)
+                this.props.listResourceDynamic(
+                  {save: recurso},
+                  null,
+                  filterBy,
+                  orderBy,
+                  limit,
+                  offset
+                )
+              }}
+              fetching={this.props.fetchingSaveAPI}
+              footerButtonsAction={registro => (
+                <td className=''>
+ADD_BUTTONS
+                </td>
+              )}
+            />
+          </Card>
+        </Row>
+ADD_MODALES
+
+      </ViewAnimated>
+    )
+  }
+}
+
+View.defaultProps = {
+}
+
+View.propTypes = {
+  // DEFAULT PROPS
+  listResourceDynamic: PropTypes.func,
+  listResourceStatic: PropTypes.func,
+  addRecord: PropTypes.func,
+  editRecord: PropTypes.func,
+  enabledRecord: PropTypes.func,
+  disabledRecord: PropTypes.func,
+  removeRecord: PropTypes.func,
+  deleteRecord: PropTypes.func,
+  selectRecord: PropTypes.func,
+  customEndpoint: PropTypes.func,
+  resetResourceDynamic: PropTypes.func,
+  resetResourceDynamicCustom: PropTypes.func,
+  resetResourceStatic: PropTypes.func,
+  submit: PropTypes.func,
+  fetching: PropTypes.bool,
+  fetchingSelected: PropTypes.bool,
+  fetchingSaveAPI: PropTypes.bool,
+  userAcciones: PropTypes.object,
+  // TOOLTIP FUNCTIONS
+  _renderTooltip: PropTypes.func,
+  // PAGINATION FUNCTIONS
+  setPagination: PropTypes.func,
+  pagination: PropTypes.object,
+  configPagination: PropTypes.object,
+  // MODAL FUNCTIONS
+  toggleModal: PropTypes.func,
+  modalStatus: PropTypes.bool,
+  currentModal: PropTypes.string,
+  modalsConfig: PropTypes.object,
+  _renderModalA: PropTypes.func,
+  _renderButtonModalA: PropTypes.func,
+  _renderModalVD: PropTypes.func,
+  _renderButtonModalVD: PropTypes.func,
+  _renderModalM: PropTypes.func,
+  _renderButtonModalM: PropTypes.func,
+  _renderModalHD: PropTypes.func,
+  _renderButtonModalHD: PropTypes.func,
+  _renderModalE: PropTypes.func,
+  _renderButtonModalE: PropTypes.func,
+  // SAVE REGISTRY
+  guardarRegistro: PropTypes.func,
+  registroGuardado: PropTypes.object,
+  // CURRENT VIEW
+  recurso-plural: PropTypes.object,
+  recurso-singularSeleccionado: PropTypes.object,
+ADD_PROPTYPES
+}
+
+function inicializacionRecursos (modal, props) {
+  if (modal === 'modalAgregar' || modal === 'modalEditar') {
+ADD_IF_RESOURCE
+  }
+}
+
+export default
+withDefaultProps(
+  withTooltipFunctions(
+    withPaginationFunctions(
+      withModalFunctions(
+        withSaveRegistry(
+          withRenderModalA(
+            withRenderModalVD(
+              withRenderModalM(
+                withRenderModalHD(
+                  withRenderModalE(
+                    withInitializeResources(View, inicializacionRecursos)
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)

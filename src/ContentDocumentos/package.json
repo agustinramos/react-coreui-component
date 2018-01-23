@@ -1,0 +1,6 @@
+{
+  "name": "ContentDocumentos",
+  "version": "1.0",
+  "private": true,
+  "main": "./index.js"
+}

@@ -1,0 +1,40 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import { } from 'reactstrap'
+import { } from 'react-bootstrap'
+import { ContentDetail } from 'components/D-CoreUI'
+
+class View extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {}
+  }
+
+  render () {
+    return (
+      <ContentDetail
+        contenido={this.props.datos}
+        // formatContenido
+        descripciones={{
+ADD_CONTENT
+        }}
+      />
+    )
+  }
+}
+
+View.defaultProps = {
+  datos: {}
+}
+
+View.propTypes = {
+  datos: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ])
+}
+
+export default View
+

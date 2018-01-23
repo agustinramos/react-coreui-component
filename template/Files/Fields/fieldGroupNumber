@@ -1,0 +1,15 @@
+        <Field
+          required
+          validate={value => {
+            return FieldValidate.required(value) ||
+              FieldValidate.mayorQue(value, 0)
+          }}
+          name='NAME'
+          type='number'
+          label='LABEL'
+          normalize={value => FieldNormalize.toInt(value)}
+          min='1'
+          component={FieldGroup}
+          // onSelect={() => {}}
+        />
+ADD_FIELD

@@ -1,0 +1,30 @@
+#!/bin/bash
+ROOT=$(readlink -f $(dirname "$0"))
+
+echo '------------------------------'
+echo 'CONTENT DETALLE:'
+
+# Entradas
+read -e -p "  generate content detalle (y/n): " -i "y" contentDetalle
+
+#FILES
+FOLDER=src/containers/$1
+FILE_CONTENT_DETALLE=$FOLDER/components/Detalle/index.js
+
+if [ "$contentDetalle" != "y" ]; then
+  # rm -Rf $FOLDER/components/Detalle
+  exit
+fi
+
+ADD_CONTENT='y'
+while [ "$ADD_CONTENT" = "y" ]; do
+  echo '//////////////////////////////'
+  read -p "  add content prop: " ADD_PROP
+  read -p "  add content label: " ADD_LABEL
+
+  sed -i "/ADD_CONTENT/i\          $ADD_PROP: 'LABEL'," "$FILE_CONTENT_DETALLE"  #add prop
+  sed -i "s/LABEL/$ADD_LABEL/g" "$FILE_CONTENT_DETALLE"  #add label
+
+  echo '//////////////////////////////'
+  read -e -p "  add more content (y/n): " -i "y" ADD_CONTENT
+done

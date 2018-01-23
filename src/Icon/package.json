@@ -1,0 +1,6 @@
+{
+  "name": "Icon",
+  "version": "2.1",
+  "private": true,
+  "main": "./index.js"
+}

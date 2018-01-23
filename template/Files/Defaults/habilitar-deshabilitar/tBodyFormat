@@ -1,0 +1,8 @@
+                habilitado: value => (
+                  <Badge
+                    pill
+                    color={(value.habilitado ? 'success' : 'danger')}
+                  >
+                    {(value.habilitado ? 'SI' : 'NO')}
+                  </Badge>
+                )

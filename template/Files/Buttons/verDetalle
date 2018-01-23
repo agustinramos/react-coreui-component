@@ -1,0 +1,1 @@
+                  { this.props._renderButtonModalVD({permiso, recurso, registro}) }

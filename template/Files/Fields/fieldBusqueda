@@ -1,0 +1,29 @@
+        <Field
+          required
+          validate={value => FieldValidate.required(value)}
+          name='NAME'
+          label='LABEL'
+          datalist={
+            this.props.ITERATOR.data
+              ? this.props.ITERATOR.data
+              : this.props.initialValues.INITIALVALUES_PROP
+                ? [this.props.initialValues.INITIALVALUES_PROP]
+                : []
+          }
+          fetching={this.props.fetchingFind}
+          withButton
+          itemKey='ITEM_KEY'
+          itemValue='ITEM_VALUE'
+          onSearch={value =>
+            this.props.listResourceDynamic(
+              {find: 'RESOURCE'},
+              null,
+              [{p: 'FIND_BY_PROP', v: value, e: 'contains'}],
+              [{p: 'ORDER_BY_PROP', v: 'asc'}],
+              50
+            )
+          }
+          component={FieldBusqueda}
+          // onChanged={(value) => {}}
+        />
+ADD_FIELD

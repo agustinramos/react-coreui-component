@@ -1,0 +1,34 @@
+#!/bin/bash
+ROOT=$(readlink -f $(dirname "$0"))
+
+echo '------------------------------'
+echo 'THEAD TABLE:'
+
+# Entradas
+read -e -p "  generate thead table (y/n): " -i "y" theadTable
+
+#FILES
+FOLDER=src/containers/$1
+
+if [ "$theadTable" != "y" ]; then
+  exit
+fi
+
+FILE_VIEW=$FOLDER/view.js
+
+ADD_THEAD='y'
+
+while [ "$ADD_THEAD" = "y" ]; do
+  echo '//////////////////////////////'
+  read -p "  add content prop: " ADD_PROP
+  read -p "  add content label: " ADD_LABEL
+
+  sed -i "/ADD_THEAD/i\                $ADD_PROP: 'LABEL'," "$FILE_VIEW"  #add prop
+  sed -i "s/LABEL/$ADD_LABEL/g" "$FILE_VIEW"  #add label
+
+  echo '//////////////////////////////'
+  read -e -p "  add more content (y/n): " -i "y" ADD_THEAD
+done
+
+sed -i "/ADD_THEAD/d" $FILE_VIEW
+

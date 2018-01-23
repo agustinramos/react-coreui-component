@@ -1,0 +1,6 @@
+{
+  "name": "Footer",
+  "version": "1.2",
+  "private": true,
+  "main": "./index.js"
+}

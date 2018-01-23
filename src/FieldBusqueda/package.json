@@ -1,0 +1,6 @@
+{
+  "name": "FieldBusqueda",
+  "version": "2.2",
+  "private": true,
+  "main": "./index.js"
+}
