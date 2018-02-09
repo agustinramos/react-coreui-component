@@ -1,6 +1,6 @@
 {
   "name": "react-coreui-component",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Components CoreUI Full for Redux Form",
   "main": "dist/react-coreui-component.js",
   "jsnext:main": "dist/react-coreui-component.es.js",
@@ -68,15 +68,12 @@
     "react-motion": "^0.5.2",
     "react-popout": "^1.0.1",
     "react-popper": "^0.7.2",
-    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-s-alert": "^1.4.0",
     "react-scroll-up": "^1.3.3",
     "react-sticky": "^6.0.1",
     "react-transition-group": "^2.2.0",
-    "reactstrap": "^4.8.0",
-    "redux": "^3.7.2",
-    "redux-form": "^7.2.1"
+    "reactstrap": "^4.8.0"
   },
   "peerDependencies": {
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0",
@@ -86,6 +83,7 @@
     "babel-cli": "^6.14.0",
     "babel-loader": "^6.2.2",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-app": "^0.2.1",

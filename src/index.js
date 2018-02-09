@@ -21,7 +21,7 @@ import FieldCaptcha from './FieldCaptcha'
 import FieldDate from './FieldDate'
 import FieldDateTime from './FieldDateTime'
 import FieldDateEvent from './FieldDateEvent'
-import FieldDragDropBoxes from './FieldDragDropBoxes'
+// import FieldDragDropBoxes from './FieldDragDropBoxes'
 import FieldBusqueda from './FieldBusqueda'
 import FieldImgProfile from './FieldImgProfile'
 import FieldTime from './FieldTime'
@@ -67,7 +67,7 @@ export {
   FieldDate,
   FieldDateTime,
   FieldDateEvent,
-  FieldDragDropBoxes,
+  // FieldDragDropBoxes,
   FieldBusqueda,
   FieldImgProfile,
   FieldTime,
