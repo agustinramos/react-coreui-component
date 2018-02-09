@@ -2,11 +2,7 @@
 ### Issue description
 
 - components: `name`
-<<<<<<< HEAD
 - react-coreui-component version `#x.x.x`
-=======
-- reactstrap version `#x.x.x`
->>>>>>> 53b63ef572951ef0ff7246d38e05976fdc586933
 - import method `umd/csj/es` (if umd, are you using the "full" version (only for v5+)?)
 - react version `#x.x.x`
 - bootstrap version `#x.x.x`
@@ -39,4 +35,3 @@ Fork a link (for the corresponding version) and update it to demonstrate your is
  
 and/or add the code which causes the issue directly here
  -->  
-

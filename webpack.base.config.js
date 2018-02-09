@@ -73,11 +73,10 @@ module.exports = function (env) {
           ]
         },
       ],
-      //noParse: /bower_components\/clipboard\/dist\/clipboard.min.js/,
       noParse: [
         /node_modules\/reactstrap-tether\/dist\/js\/tether.js/,
         /node_modules\/jspdf\/dist\/jspdf.min.js/
-      ],
+      ]
     },
     resolve: {
       alias: {
